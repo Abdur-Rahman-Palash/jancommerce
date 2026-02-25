@@ -10,7 +10,7 @@ services:
     branch: main
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: config.settings.prod
+        value: config.settings.render_fix
       - key: PYTHON_VERSION
         value: 3.11.9
       - key: SECRET_KEY
