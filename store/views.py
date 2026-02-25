@@ -78,6 +78,22 @@ def categories_view(request):
     return render(request, 'store/categories.html', context)
 
 
+def deals_view(request):
+    products = get_dummy_products()
+    
+    # Get products with discounts (deals)
+    deals = []
+    for product in products:
+        if hasattr(product, 'old_price') and product.old_price and product.old_price > product.price:
+            deals.append(product)
+    
+    context = {
+        'deals': deals,
+        'products': products,
+    }
+    return render(request, 'store/deals.html', context)
+
+
 # Authentication Views
 def login_view(request):
     if request.method == 'POST':
@@ -188,6 +204,34 @@ def forgot_password_view(request):
         email = request.POST.get('email')
         # For demo purposes, just show success message
         messages.success(request, f'Password reset link has been sent to {email}')
-        return redirect('/login')
+        return redirect('/login/')
     
     return render(request, 'store/forgot_password.html')
+
+
+def profile_view(request):
+    return render(request, 'store/profile.html')
+
+
+def orders_view(request):
+    return render(request, 'store/orders.html')
+
+
+def wishlist_view(request):
+    return render(request, 'store/wishlist.html')
+
+
+def settings_view(request):
+    return render(request, 'store/settings.html')
+
+
+def become_seller_view(request):
+    return render(request, 'store/become_seller.html')
+
+
+def checkout_view(request):
+    return render(request, 'store/checkout.html')
+
+
+def order_success_view(request):
+    return render(request, 'store/order_success.html')

@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Orders - JanCommerce{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 py-20">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header Section -->
+            <div class="text-center mb-8 lg:mb-12" data-aos="fade-up">
+                <h1 class="text-3xl lg:text-5xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+                    My Orders
+                </h1>
+                <p class="text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
+                    Track and manage your orders
+                </p>
+            </div>
+
+            <!-- Orders Content -->
+            <div class="bg-white rounded-2xl shadow-lg p-4 lg:p-8" data-aos="fade-up" data-aos-delay="100">
+                <div id="ordersList" class="space-y-6">
+                    <!-- Orders will be populated by JavaScript -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyOrders" class="text-center py-16">
+                    <div class="w-24 h-24 lg:w-32 lg:h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 lg:mb-8">
+                        <i class="fas fa-box-open text-2xl lg:text-4xl text-gray-400"></i>
+                    </div>
+                    <h3 class="text-xl lg:text-2xl font-bold text-gray-900 mb-4">No Orders Yet</h3>
+                    <p class="text-gray-600 mb-8">You haven't placed any orders yet. Start shopping to see your orders here!</p>
+                    <a href="/products/" class="inline-flex items-center justify-center px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 font-bold text-base lg:text-lg">
+                        <i class="fas fa-shopping-bag mr-2"></i>
+                        Start Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orders JavaScript -->
+<script>
+    function displayOrders() {
+        const orders = JSON.parse(localStorage.getItem('jancommerce_orders') || '[]');
+        const ordersList = document.getElementById('ordersList');
+        const emptyOrders = document.getElementById('emptyOrders');
+        
+        if (orders.length > 0) {
+            // Sort orders by date (newest first)
+            orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            let ordersHTML = '';
+            orders.forEach(order => {
+                const orderDate = new Date(order.createdAt);
+                const formattedDate = orderDate.toLocaleDateString();
+                const formattedTime = orderDate.toLocaleTimeString();
+                
+                // Calculate order status color
+                let statusColor = 'text-gray-600';
+                let statusBg = 'bg-gray-100';
+                if (order.status === 'processing') {
+                    statusColor = 'text-blue-600';
+                    statusBg = 'bg-blue-100';
+                } else if (order.status === 'shipped') {
+                    statusColor = 'text-purple-600';
+                    statusBg = 'bg-purple-100';
+                } else if (order.status === 'delivered') {
+                    statusColor = 'text-green-600';
+                    statusBg = 'bg-green-100';
+                }
+                
+                ordersHTML += `
+                    <div class="border border-gray-200 rounded-xl p-4 lg:p-6 hover:shadow-lg transition-shadow">
+                        <!-- Order Header -->
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+                            <div>
+                                <h3 class="text-lg lg:text-xl font-bold text-gray-900">Order #${order.orderNumber}</h3>
+                                <p class="text-sm text-gray-600">Placed on ${formattedDate} at ${formattedTime}</p>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="px-3 py-1 ${statusBg} ${statusColor} text-sm font-medium rounded-full">
+                                    ${order.status.toUpperCase()}
+                                </span>
+                                <span class="text-lg lg:text-xl font-bold text-gray-900">$${order.total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Items -->
+                        <div class="mb-4">
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${order.items.map(item => `
+                                    <div class="flex items-center space-x-2 bg-gray-50 rounded-lg p-2">
+                                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">${item.name}</h4>
+                                            <p class="text-xs text-gray-600">Qty: ${item.quantity} × $${item.price.toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <!-- Order Details -->
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                                <div>
+                                    <p class="text-gray-600">Payment Method</p>
+                                    <p class="font-medium text-gray-900">${order.paymentMethod.replace('_', ' ').toUpperCase()}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Shipping Address</p>
+                                    <p class="font-medium text-gray-900">${order.customer.address}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Items</p>
+                                    <p class="font-medium text-gray-900">${order.items.length} items</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Total Amount</p>
+                                    <p class="font-medium text-gray-900">$${order.total.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 gap-4">
+                                <button onclick="viewOrderDetails('${order.orderNumber}')" class="w-full sm:w-auto bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                                    <i class="fas fa-eye mr-2"></i>
+                                    View Details
+                                </button>
+                                ${order.status === 'processing' ? `
+                                    <button onclick="cancelOrder('${order.orderNumber}')" class="w-full sm:w-auto bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                        <i class="fas fa-times mr-2"></i>
+                                        Cancel Order
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            ordersList.innerHTML = ordersHTML;
+            emptyOrders.style.display = 'none';
+        } else {
+            ordersList.innerHTML = '';
+            emptyOrders.style.display = 'block';
+        }
+    }
+    
+    function viewOrderDetails(orderNumber) {
+        const orders = JSON.parse(localStorage.getItem('jancommerce_orders') || '[]');
+        const order = orders.find(o => o.orderNumber === orderNumber);
+        
+        if (order) {
+            // Create a simple modal to show order details
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 lg:p-8 max-w-2xl w-full max-h-screen overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl lg:text-2xl font-bold text-gray-900">Order Details</h2>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Order Number</p>
+                            <p class="font-medium text-gray-900">#${order.orderNumber}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Order Date</p>
+                            <p class="font-medium text-gray-900">${new Date(order.createdAt).toLocaleString()}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Status</p>
+                            <p class="font-medium text-gray-900">${order.status.toUpperCase()}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Payment Method</p>
+                            <p class="font-medium text-gray-900">${order.paymentMethod.replace('_', ' ').toUpperCase()}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Shipping Address</p>
+                            <p class="font-medium text-gray-900">${order.customer.address}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Items</p>
+                            <div class="space-y-2">
+                                ${order.items.map(item => `
+                                    <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                                        <div class="flex items-center space-x-3">
+                                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                                            <div>
+                                                <h4 class="font-medium text-gray-900">${item.name}</h4>
+                                                <p class="text-sm text-gray-600">Qty: ${item.quantity}</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-bold text-gray-900">$${(item.price * item.quantity).toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Subtotal</span>
+                                    <span>$${order.subtotal.toFixed(2)}</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Shipping</span>
+                                    <span>$${order.shipping.toFixed(2)}</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Tax</span>
+                                    <span>$${order.tax.toFixed(2)}</span>
+                                </div>
+                                ${order.discount > 0 ? `
+                                <div class="flex justify-between text-green-600">
+                                    <span>Discount</span>
+                                    <span>-$${order.discount.toFixed(2)}</span>
+                                </div>
+                                ` : ''}
+                                <div class="flex justify-between text-xl font-bold text-gray-900 pt-2 border-t">
+                                    <span>Total</span>
+                                    <span>$${order.total.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+    }
+    
+    function cancelOrder(orderNumber) {
+        if (confirm('Are you sure you want to cancel this order?')) {
+            let orders = JSON.parse(localStorage.getItem('jancommerce_orders') || '[]');
+            orders = orders.map(order => {
+                if (order.orderNumber === orderNumber) {
+                    order.status = 'cancelled';
+                }
+                return order;
+            });
+            localStorage.setItem('jancommerce_orders', JSON.stringify(orders));
+            displayOrders();
+            alert('Order cancelled successfully');
+        }
+    }
+    
+    // Load orders on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        displayOrders();
+    });
+</script>
+{% endblock %}

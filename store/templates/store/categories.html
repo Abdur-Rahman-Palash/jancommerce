@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Categories - JanCommerce{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-20">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header Section -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-500 rounded-3xl mb-6">
+                    <i class="fas fa-th-large text-white text-4xl"></i>
+                </div>
+                <h1 class="text-5xl font-black bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+                    Browse Categories
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Explore our wide range of product categories
+                </p>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" id="categoriesGrid">
+                <!-- Electronics Category -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 hover:scale-105 group cursor-pointer" data-aos="fade-up" onclick="filterByCategory('Electronics')">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-laptop text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Electronics</h3>
+                        <p class="text-gray-600 mb-4">Laptops, phones, tablets, and more</p>
+                        <div class="flex items-center justify-between text-sm text-blue-600">
+                            <span>2,456 products</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fashion Category -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 hover:scale-105 group cursor-pointer" data-aos="fade-up" data-aos-delay="100" onclick="filterByCategory('Fashion')">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tshirt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Fashion</h3>
+                        <p class="text-gray-600 mb-4">Clothing, shoes, accessories</p>
+                        <div class="flex items-center justify-between text-sm text-purple-600">
+                            <span>3,789 products</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home & Garden Category -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 hover:scale-105 group cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="filterByCategory('Home')">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-home text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Home & Garden</h3>
+                        <p class="text-gray-600 mb-4">Furniture, decor, outdoor items</p>
+                        <div class="flex items-center justify-between text-sm text-green-600">
+                            <span>1,234 products</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sports Category -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 hover:scale-105 group cursor-pointer" data-aos="fade-up" data-aos-delay="300" onclick="filterByCategory('Sports')">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-football-ball text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Sports</h3>
+                        <p class="text-gray-600 mb-4">Equipment, apparel, accessories</p>
+                        <div class="flex items-center justify-between text-sm text-orange-600">
+                            <span>987 products</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books Category -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 hover:scale-105 group cursor-pointer" data-aos="fade-up" data-aos-delay="400" onclick="filterByCategory('Books')">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-book text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Books</h3>
+                        <p class="text-gray-600 mb-4">Fiction, non-fiction, educational</p>
+                        <div class="flex items-center justify-between text-sm text-yellow-600">
+                            <span>2,156 products</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Categories -->
+            <div class="bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl p-8 mb-8" data-aos="fade-up" data-aos-delay="500">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Featured Categories</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                        <i class="fas fa-star text-yellow-500 text-2xl mb-2"></i>
+                        <p class="text-sm font-medium">Trending Now</p>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                        <i class="fas fa-fire text-red-500 text-2xl mb-2"></i>
+                        <p class="text-sm font-medium">Hot Deals</p>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                        <i class="fas fa-tag text-green-500 text-2xl mb-2"></i>
+                        <p class="text-sm font-medium">Best Sellers</p>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                        <i class="fas fa-sparkles text-purple-500 text-2xl mb-2"></i>
+                        <p class="text-sm font-medium">New Arrivals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+{% endblock %}

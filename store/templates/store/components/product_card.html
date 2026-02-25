@@ -78,7 +78,7 @@
             <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">({{ p.rating }}/5)</span>
         </div>
         
-        <button class="add-cart w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2" onclick="router.addToCart({{ p.id }})">
+        <button class="add-cart w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2" data-product-id="{{ p.id }}" onclick="addToCart(this)">
             <i class="fas fa-shopping-cart"></i>
             <span>Add to Cart</span>
         </button>

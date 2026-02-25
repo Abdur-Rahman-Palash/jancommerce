@@ -9,8 +9,146 @@
 <div class="min-h-screen pt-20 relative">
     {% include 'store/components/header.html' %}
     
-    <!-- Fixed Left Sidebar -->
-    <div id="leftSidebar" class="fixed left-0 top-20 bottom-0 w-64 bg-white/95 backdrop-blur-xl border-r border-gray-200 shadow-xl z-30 transition-transform duration-300 overflow-y-auto">
+    <!-- Mobile Menu Toggle -->
+    <button 
+        onclick="toggleMobileSidebar()" 
+        class="lg:hidden fixed left-4 top-24 z-40 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+        id="mobileMenuToggle"
+    >
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Mobile Sidebar Overlay -->
+    <div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="toggleMobileSidebar()"></div>
+    
+    <!-- Mobile Sidebar -->
+    <div id="mobileSidebar" class="lg:hidden fixed left-0 top-20 bottom-0 w-80 bg-white/95 backdrop-blur-xl border-r border-gray-200 shadow-xl z-50 transition-transform duration-300 overflow-y-auto -translate-x-full">
+        <div class="p-6">
+            <!-- Mobile Sidebar Header -->
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold text-gray-900">Quick Shop</h3>
+                <button onclick="toggleMobileSidebar()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Search -->
+            <div class="mb-6">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search products..." 
+                        class="w-full px-4 py-2 pl-10 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        id="mobileSidebarSearch"
+                    />
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <!-- Mobile Categories -->
+            <div class="mb-6">
+                <h4 class="font-semibold text-gray-900 mb-3">Categories</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition-colors">
+                        <span>Electronics</span>
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">24</span>
+                    </a></li>
+                    <li><a href="#" class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition-colors">
+                        <span>Fashion</span>
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">18</span>
+                    </a></li>
+                    <li><a href="#" class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition-colors">
+                        <span>Home & Garden</span>
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">12</span>
+                    </a></li>
+                    <li><a href="#" class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition-colors">
+                        <span>Sports</span>
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">8</span>
+                    </a></li>
+                    <li><a href="#" class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition-colors">
+                        <span>Books</span>
+                        <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">15</span>
+                    </a></li>
+                </ul>
+            </div>
+            
+            <!-- Mobile Price Range -->
+            <div class="mb-6">
+                <h4 class="font-semibold text-gray-900 mb-3">Price Range</h4>
+                <div class="space-y-3">
+                    <input type="range" min="0" max="1000" value="500" class="w-full" id="mobilePriceRange">
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>$0</span>
+                        <span id="mobilePriceValue">$500</span>
+                        <span>$1000</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Quick Filters -->
+            <div class="mb-6">
+                <h4 class="font-semibold text-gray-900 mb-3">Quick Filters</h4>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2 text-blue-600">
+                        <span class="text-gray-600">Free Shipping</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2 text-blue-600">
+                        <span class="text-gray-600">On Sale</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2 text-blue-600">
+                        <span class="text-gray-600">New Arrivals</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2 text-blue-600">
+                        <span class="text-gray-600">Best Sellers</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Mobile Rating Filter -->
+            <div class="mb-6">
+                <h4 class="font-semibold text-gray-900 mb-3">Customer Rating</h4>
+                <div class="space-y-2">
+                    <div class="flex items-center cursor-pointer hover:text-blue-600">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-600">& Up</span>
+                    </div>
+                    <div class="flex items-center cursor-pointer hover:text-blue-600">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-gray-600">& Up</span>
+                    </div>
+                    <div class="flex items-center cursor-pointer hover:text-blue-600">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-gray-600">& Up</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Desktop Sidebar -->
+    <div id="leftSidebar" class="hidden lg:block fixed left-0 top-20 bottom-0 w-64 bg-white/95 backdrop-blur-xl border-r border-gray-200 shadow-xl z-30 transition-transform duration-300 overflow-y-auto">
         <div class="p-6">
             <!-- Sidebar Header -->
             <div class="flex items-center justify-between mb-6">
@@ -156,34 +294,33 @@
                 <button class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all mb-2">
                     <i class="fas fa-filter mr-2"></i>Apply Filters
                 </button>
-                <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-all">
-                    <i class="fas fa-redo mr-2"></i>Reset
+                <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-all" onclick="testCartFunction()">
+                    Test Cart Function
                 </button>
             </div>
         </div>
     </div>
     
-    <!-- Sidebar Toggle Button -->
+    <!-- Desktop Sidebar Toggle Button -->
     <button 
         onclick="toggleSidebar()" 
-        class="fixed left-4 top-32 z-40 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+        class="hidden lg:block fixed left-4 top-32 z-40 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
         id="sidebarToggleBtn"
     >
         <i class="fas fa-times"></i>
     </button>
     
-    <main class="transition-all duration-300 ml-64" id="mainContent">
+    <!-- Main Content -->
+    <main class="transition-all duration-300 lg:ml-64" id="mainContent">
         <div class="container mx-auto px-4 py-8">
-        <!-- Product data for JavaScript -->
-        {{ products|json_script:"products-data" }}
         
         <!-- Hero Section -->
-        <section class="hero-section mb-12" data-aos="fade-up">
+        <section class="hero-section mb-8 lg:mb-12" data-aos="fade-up">
             {% include 'store/components/hero.html' %}
         </section>
         
         <!-- Pricing Section -->
-        <section class="pricing-section mb-12" data-aos="fade-up" data-aos-delay="100">
+        <section class="pricing-section mb-8 lg:mb-12" data-aos="fade-up" data-aos-delay="100">
             {% include 'store/components/pricing.html' %}
         </section>
         
@@ -194,16 +331,16 @@
 
         <!-- Featured Products -->
         {% if products %}
-        <section class="featured-section mb-12" data-aos="fade-up" data-aos-delay="300">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <section class="featured-section mb-8 lg:mb-12" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                <h2 class="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     Featured Products
                 </h2>
                 <a href="/products" class="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2">
                     View All <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                 {% for p in products %}
                     {% if p.featured %}
                         {% include 'store/components/product_card.html' with p=p %}
@@ -214,12 +351,12 @@
 
         <!-- All Products -->
         <section class="all-products-section" data-aos="fade-up" data-aos-delay="400">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                <h2 class="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     All Products
                 </h2>
                 <div class="flex items-center gap-4">
-                    <select class="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" id="sortSelect">
+                    <select class="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 w-full sm:w-auto" id="sortSelect">
                         <option>Sort by: Featured</option>
                         <option>Price: Low to High</option>
                         <option>Price: High to Low</option>
@@ -230,7 +367,7 @@
             </div>
             
             <!-- Product Grid -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                 {% for p in products %}
                     {% include 'store/components/product_card.html' with p=p %}
                 {% endfor %}
@@ -264,34 +401,171 @@
     <!-- Dashboard content will be dynamically loaded -->
 </div>
 
+<!-- Product data for JavaScript -->
+<script type="application/json" id="products-data">
+[
+    {% for p in products %}
+    {
+        "id": {{ p.id }},
+        "name": "{{ p.name|escapejs }}",
+        "price": {{ p.price }},
+        "old_price": {{ p.old_price|default:"null" }},
+        "category": "{{ p.category|escapejs }}",
+        "rating": {{ p.rating|default:5 }},
+        "badge": "{{ p.badge|default:""|escapejs }}",
+        "image": "{{ p.image|escapejs }}",
+        "vendor": {
+            "name": "{{ p.vendor.name|escapejs }}",
+            "rating": {{ p.vendor.rating|default:5 }}
+        },
+        "featured": {{ p.featured|yesno:"true,false" }},
+        "free_shipping": {{ p.free_shipping|yesno:"true,false" }},
+        "is_new": {{ p.is_new|yesno:"true,false" }},
+        "is_bestseller": {{ p.is_bestseller|yesno:"true,false" }}
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+]
+</script>
+
 <script>
+// Aggressive cache-busting - JanCommerce v2.2.0
+console.log('JanCommerce v2.2.0 - FORCE RELOAD');
+
+// Force cache clear
+if ('caches' in window) {
+    caches.keys().then(function(names) {
+        names.forEach(function(name) {
+            caches.delete(name);
+        });
+    });
+}
+
+// Global error handler to catch all errors
+window.addEventListener('error', function(e) {
+    console.error('Global error caught:', e.error);
+    console.error('Error details:', {
+        message: e.message,
+        filename: e.filename,
+        lineno: e.lineno,
+        colno: e.colno,
+        stack: e.error?.stack
+    });
+    
+    // Prevent router errors from stopping execution
+    if (e.message.includes('router is not defined')) {
+        console.warn('Router error detected - this is from cached version');
+        e.preventDefault();
+    }
+});
+
+// Global click handler to debug button clicks
+document.addEventListener('click', function(e) {
+    if (e.target.tagName === 'BUTTON') {
+        console.log('Button clicked:', e.target);
+        console.log('Button onclick:', e.target.onclick);
+        console.log('Button dataset:', e.target.dataset);
+        console.log('Button text:', e.target.textContent);
+        
+        // Check if onclick contains router reference
+        if (e.target.onclick && e.target.onclick.toString().includes('router')) {
+            console.error('FOUND ROUTER REFERENCE in button onclick!');
+            console.error('Onclick function:', e.target.onclick.toString());
+            
+            // Remove the problematic onclick handler
+            e.target.onclick = null;
+            console.warn('Removed problematic onclick handler');
+            
+            // Add proper addToCart handler if it's an add-to-cart button
+            if (e.target.textContent.includes('Add to Cart') || e.target.classList.contains('add-cart')) {
+                console.log('Adding proper addToCart handler to button');
+                e.target.onclick = function() { addToCart(this); };
+                console.log('Fixed button onclick handler');
+            }
+        }
+    }
+});
+
+// Aggressive router cleanup - scan all buttons periodically
+function cleanRouterReferences() {
+    const buttons = document.querySelectorAll('button');
+    console.log('Scanning', buttons.length, 'buttons for router references...');
+    
+    buttons.forEach((button, index) => {
+        if (button.onclick && button.onclick.toString().includes('router')) {
+            console.error('Router reference found in button', index, ':', button);
+            console.error('Onclick:', button.onclick.toString());
+            
+            // Remove router reference
+            button.onclick = null;
+            
+            // Add proper handler for add-to-cart buttons
+            if (button.textContent.includes('Add to Cart') || button.classList.contains('add-cart')) {
+                button.onclick = function() { addToCart(this); };
+                console.log('Fixed button', index, 'with proper addToCart handler');
+            }
+        }
+    });
+}
+
+// Clean router references immediately and periodically
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Starting router cleanup...');
+    cleanRouterReferences();
+    
+    // Clean every 2 seconds for the first 10 seconds
+    let cleanupCount = 0;
+    const cleanupInterval = setInterval(() => {
+        cleanRouterReferences();
+        cleanupCount++;
+        if (cleanupCount >= 5) {
+            clearInterval(cleanupInterval);
+            console.log('Router cleanup completed');
+        }
+    }, 2000);
+});
+
 // Initialize products and functionality
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Loaded - Initializing JanCommerce v2.2.0...');
+    
+    // Force reload check
+    console.log('Current URL:', window.location.href);
+    console.log('User Agent:', navigator.userAgent);
+    
     // Get product data from json_script
     const productsData = document.getElementById('products-data');
+    console.log('Products data element:', productsData);
+    
     if (productsData) {
-        window.products = JSON.parse(productsData.textContent);
-        
-        // Initialize cart functionality
-        initializeCart();
-        
-        // Initialize sorting
-        initializeSorting();
-        
-        // Initialize filters
-        initializeFilters();
-        
-        // Initialize sidebar
-        initializeSidebar();
-        
-        // Handle scroll behavior
-        handleScrollBehavior();
+        try {
+            window.products = JSON.parse(productsData.textContent);
+            console.log('Products loaded successfully:', window.products);
+            
+            // Initialize cart functionality
+            initializeCart();
+            
+            // Initialize sorting
+            initializeSorting();
+            
+            // Initialize filters
+            initializeFilters();
+            
+            // Initialize sidebar
+            initializeSidebar();
+            
+            // Handle scroll behavior
+            handleScrollBehavior();
+        } catch (error) {
+            console.error('Error parsing products data:', error);
+        }
+    } else {
+        console.error('Products data element not found');
     }
 });
 
 // Sidebar functionality
 function initializeSidebar() {
-    // Price range slider
+    // Price range slider (desktop)
     const priceRange = document.getElementById('priceRange');
     const priceValue = document.getElementById('priceValue');
     
@@ -301,7 +575,17 @@ function initializeSidebar() {
         });
     }
     
-    // Sidebar search
+    // Mobile price range slider
+    const mobilePriceRange = document.getElementById('mobilePriceRange');
+    const mobilePriceValue = document.getElementById('mobilePriceValue');
+    
+    if (mobilePriceRange && mobilePriceValue) {
+        mobilePriceRange.addEventListener('input', function() {
+            mobilePriceValue.textContent = `$${this.value}`;
+        });
+    }
+    
+    // Sidebar search (desktop)
     const sidebarSearch = document.getElementById('sidebarSearch');
     if (sidebarSearch) {
         sidebarSearch.addEventListener('input', function(e) {
@@ -310,7 +594,16 @@ function initializeSidebar() {
         });
     }
     
-    // Category links
+    // Mobile sidebar search
+    const mobileSidebarSearch = document.getElementById('mobileSidebarSearch');
+    if (mobileSidebarSearch) {
+        mobileSidebarSearch.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            filterProductsBySearch(searchTerm);
+        });
+    }
+    
+    // Category links (desktop)
     const categoryLinks = document.querySelectorAll('#leftSidebar a[href="#"]');
     categoryLinks.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -322,7 +615,21 @@ function initializeSidebar() {
         });
     });
     
-    // Rating filters
+    // Mobile category links
+    const mobileCategoryLinks = document.querySelectorAll('#mobileSidebar a[href="#"]');
+    mobileCategoryLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Get the category name from the span element
+            const categorySpan = this.querySelector('span');
+            const category = categorySpan ? categorySpan.textContent.trim() : this.textContent.trim();
+            filterByCategory(category);
+            // Close mobile sidebar after selection
+            toggleMobileSidebar();
+        });
+    });
+    
+    // Rating filters (desktop)
     const ratingFilters = document.querySelectorAll('#leftSidebar .flex.items-center.cursor-pointer');
     ratingFilters.forEach(filter => {
         filter.addEventListener('click', function() {
@@ -331,7 +638,16 @@ function initializeSidebar() {
         });
     });
     
-    // Checkbox filters
+    // Mobile rating filters
+    const mobileRatingFilters = document.querySelectorAll('#mobileSidebar .flex.items-center.cursor-pointer');
+    mobileRatingFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+            const stars = this.querySelectorAll('.fas.fa-star').length;
+            filterByRating(stars);
+        });
+    });
+    
+    // Checkbox filters (desktop)
     const checkboxes = document.querySelectorAll('#leftSidebar input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
@@ -339,16 +655,57 @@ function initializeSidebar() {
         });
     });
     
-    // Apply filters button
+    // Mobile checkbox filters
+    const mobileCheckboxes = document.querySelectorAll('#mobileSidebar input[type="checkbox"]');
+    mobileCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            applyAllFilters();
+        });
+    });
+    
+    // Apply filters button (desktop)
     const applyFiltersBtn = document.querySelector('#leftSidebar button');
     if (applyFiltersBtn && applyFiltersBtn.textContent.includes('Apply Filters')) {
         applyFiltersBtn.addEventListener('click', applyAllFilters);
     }
     
-    // Reset button
+    // Mobile apply filters button
+    const mobileApplyFiltersBtn = document.querySelector('#mobileSidebar button');
+    if (mobileApplyFiltersBtn && mobileApplyFiltersBtn.textContent.includes('Apply Filters')) {
+        mobileApplyFiltersBtn.addEventListener('click', applyAllFilters);
+    }
+    
+    // Reset button (desktop)
     const resetBtn = document.querySelector('#leftSidebar button:last-child');
     if (resetBtn && resetBtn.textContent.includes('Reset')) {
         resetBtn.addEventListener('click', resetFilters);
+    }
+    
+    // Mobile reset button
+    const mobileResetBtn = document.querySelector('#mobileSidebar button:last-child');
+    if (mobileResetBtn && mobileResetBtn.textContent.includes('Reset')) {
+        mobileResetBtn.addEventListener('click', resetFilters);
+    }
+}
+
+function toggleMobileSidebar() {
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const mobileSidebarOverlay = document.getElementById('mobileSidebarOverlay');
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    
+    mobileSidebar.classList.toggle('-translate-x-full');
+    mobileSidebarOverlay.classList.toggle('hidden');
+    
+    // Toggle menu icon
+    if (mobileMenuToggle) {
+        const icon = mobileMenuToggle.querySelector('i');
+        if (mobileSidebar.classList.contains('-translate-x-full')) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        } else {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        }
     }
 }
 
@@ -539,6 +896,7 @@ function scrollToProduct(productId) {
     featuredCards.forEach((card, index) => {
         const addToCartBtn = card.querySelector('button[onclick*="addToCart"]');
         if (addToCartBtn && addToCartBtn.getAttribute('onclick').includes(`addToCart(${productId})`)) {
+            // Scroll to the product
             card.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
@@ -566,18 +924,61 @@ function initializeCart() {
     updateCartUI();
 }
 
-function addToCart(productId) {
+function addToCart(button) {
+    console.log('addToCart called with button:', button);
+    
+    // Check if window.products is available
+    if (!window.products || window.products.length === 0) {
+        console.error('window.products is not available or empty');
+        console.log('Attempting to reload products data...');
+        
+        // Try to reload products data
+        const productsData = document.getElementById('products-data');
+        if (productsData) {
+            try {
+                window.products = JSON.parse(productsData.textContent);
+                console.log('Products data reloaded:', window.products);
+            } catch (error) {
+                console.error('Failed to reload products data:', error);
+                showNotification('Error: Products data not available. Please refresh the page.');
+                return;
+            }
+        } else {
+            console.error('Products data element not found');
+            showNotification('Error: Products data not available. Please refresh the page.');
+            return;
+        }
+    }
+    
+    const productId = parseInt(button.getAttribute('data-product-id'));
+    console.log('Product ID extracted:', productId);
+    
     const product = window.products.find(p => p.id === productId);
+    console.log('Found product:', product);
+    
     if (product) {
+        console.log('Product found, adding to cart');
+        
+        // Ensure cart is initialized
+        if (!window.cart) {
+            window.cart = [];
+        }
+        
         const existingItem = window.cart.find(item => item.id === productId);
         if (existingItem) {
+            console.log('Item already in cart, updating quantity');
             existingItem.quantity++;
         } else {
+            console.log('New item, adding to cart');
             window.cart.push({ ...product, quantity: 1 });
         }
         saveCart();
         updateCartUI();
         showNotification('Product added to cart!');
+    } else {
+        console.log('Product not found, ID:', productId);
+        console.log('Available products:', window.products);
+        showNotification('Error: Product not found. Please refresh the page.');
     }
 }
 
@@ -592,6 +993,45 @@ function updateCartUI() {
         cartCount.textContent = totalItems;
         cartCount.style.transform = totalItems > 0 ? 'scale(1)' : 'scale(0)';
     }
+}
+
+function handleHeaderSearch(event) {
+    if (event.key === 'Enter') {
+        performHeaderSearch();
+    }
+}
+
+function performHeaderSearch() {
+    const searchInput = document.getElementById('headerSearch');
+    const searchTerm = searchInput.value.trim();
+    
+    if (searchTerm) {
+        // Filter products by search term
+        const filtered = window.products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.vendor.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        
+        renderProducts(filtered);
+        
+        // Show notification
+        showNotification(`Found ${filtered.length} products for "${searchTerm}"`);
+        
+        // Scroll to products section
+        const allProductsSection = document.querySelector('.all-products-section');
+        if (allProductsSection) {
+            allProductsSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+}
+
+function toggleCart() {
+    // Navigate to cart page or show cart modal
+    window.location.href = '/cart/';
 }
 
 function showNotification(message) {
@@ -698,7 +1138,7 @@ function renderProducts(products) {
                     <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">(${productRating}/5)</span>
                 </div>
                 
-                <button class="add-cart w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2" onclick="addToCart(${productId})">
+                <button class="add-cart w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2" data-product-id="${productId}" onclick="addToCart(this)">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Add to Cart</span>
                 </button>
