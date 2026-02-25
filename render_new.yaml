@@ -22,11 +22,11 @@ services:
     databases:
       - name: jancommerce-db
         plan: free
-        databaseName: jancommerce
-        user: jancommerce
+      databaseName: jancommerce
+      user: jancommerce
 
 databases:
   - name: jancommerce-db
     plan: free
-    databaseName: jancommerce
-    user: jancommerce
+  databaseName: jancommerce
+  user: jancommerce
