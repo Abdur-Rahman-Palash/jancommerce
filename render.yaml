@@ -17,8 +17,6 @@ services:
         generateValue: true
       - key: DEBUG
         value: False
-      - key: RENDER_EXTERNAL_URL
-        sync: false
     databases:
       - name: jancommerce-db
         plan: free
