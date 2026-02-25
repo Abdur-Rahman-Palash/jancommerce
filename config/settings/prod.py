@@ -4,12 +4,18 @@ import os
 DEBUG = False
 
 # Security settings for production
+# Get the Render hostname from environment or use defaults
+render_hostname = os.getenv('RENDER_EXTERNAL_HOSTNAME', 'jancommerce.onrender.com')
+
 ALLOWED_HOSTS = [
+    render_hostname,
+    f'www.{render_hostname}',
     'jancommerce.onrender.com',
     'www.jancommerce.onrender.com',
     'jancommerce-render.onrender.com',
     'localhost',
     '127.0.0.1',
+    '*',
 ]
 
 # Security settings

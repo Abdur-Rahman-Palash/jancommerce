@@ -17,6 +17,8 @@ services:
         generateValue: true
       - key: DEBUG
         value: False
+      - key: RENDER_EXTERNAL_HOSTNAME
+        value: jancommerce.onrender.com
     databases:
       - name: jancommerce-db
         plan: free
