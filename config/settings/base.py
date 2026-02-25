@@ -5,6 +5,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'change-me-in-production')
 
+# Security settings
+ALLOWED_HOSTS = ['*']  # Allow all hosts for development and production
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
