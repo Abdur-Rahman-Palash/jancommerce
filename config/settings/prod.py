@@ -4,14 +4,17 @@ import os
 DEBUG = False
 ALLOWED_HOSTS = ['*.onrender.com', 'localhost', '127.0.0.1']
 
-# Security settings
-SECURE_SSL_REDIRECT = True
+# Security settings - only enable SSL if not in development
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
+
+# Only enable SSL redirect if not in development/preview
+if not os.environ.get('RENDER_EXTERNAL_URL'):
+    SECURE_SSL_REDIRECT = False
 
 # Database configuration for Render
 if 'DATABASE_URL' in os.environ:
