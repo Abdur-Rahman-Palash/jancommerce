@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - JanCommerce{% endblock %}
+
+{% block content %}
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white bg-opacity-20 backdrop-blur-lg shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+        <div class="p-4">
+            <h2 class="text-xl font-semibold mb-4">Categories</h2>
+            <ul class="space-y-2">
+                <li><a href="#" class="flex items-center p-2 rounded hover:bg-white hover:bg-opacity-40"><i class="fas fa-tshirt mr-2"></i> Apparel</a></li>
+                <li><a href="#" class="flex items-center p-2 rounded hover:bg-white hover:bg-opacity-40"><i class="fas fa-laptop mr-2"></i> Electronics</a></li>
+                <li><a href="#" class="flex items-center p-2 rounded hover:bg-white hover:bg-opacity-40"><i class="fas fa-couch mr-2"></i> Home</a></li>
+                <li><a href="#" class="flex items-center p-2 rounded hover:bg-white hover:bg-opacity-40"><i class="fas fa-book mr-2"></i> Books</a></li>
+                <li><a href="#" class="flex items-center p-2 rounded hover:bg-white hover:bg-opacity-40"><i class="fas fa-gem mr-2"></i> Accessories</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="fixed top-0 left-0 right-0 bg-white bg-opacity-30 backdrop-blur-lg shadow-md z-20 animate-slide-down transform transition-transform duration-300" id="topHeader">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center">
+                    <button id="sidebarToggle" class="lg:hidden mr-4 text-gray-700 focus:outline-none">
+                        <i class="fas fa-bars fa-lg"></i>
+                    </button>
+                    <a href="/" class="text-2xl font-bold tracking-wide">JanCommerce</a>
+                </div>
+                <div class="flex-1 mx-6">
+                    <input type="text" placeholder="Search products" class="w-full px-4 py-2 rounded-full bg-white bg-opacity-50 focus:bg-opacity-100 outline-none transition-all"/>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-1">Dashboard</a>
+                    <a href="#" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition">Become a Seller</a>
+                    <div class="relative">
+                        <a href="#" class="text-gray-700 hover:text-gray-900 relative" id="cartBtn">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                        </a>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
+                    </div>
+                    <a href="#" class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-full hover:from-blue-600 hover:to-indigo-600 transition-colors transform hover:scale-105">Login</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content area -->
+        <main class="pt-20 pt-24 px-4 pb-8 overflow-auto">
+            <!-- hero banner -->
+            <section class="relative h-64 bg-cover bg-center rounded-lg mb-8 overflow-hidden hero-banner" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Banner');" data-aos="fade-in">
+                <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center space-y-4">
+                    <h1 class="text-4xl md:text-6xl text-white font-bold">Welcome to JanCommerce</h1>
+                    <a href="#productGrid" class="bg-gradient-to-r from-green-400 to-teal-400 text-white px-6 py-3 rounded-full hover:from-green-500 hover:to-teal-500 transition transform hover:scale-105">Shop Now</a>
+                </div>
+            </section>
+            <!-- subscription plans -->
+            <section class="mb-10" data-aos="fade-up">
+                <h2 class="text-2xl font-semibold mb-6 text-center">Subscription Pricing</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Basic -->
+                    <div class="border rounded-lg p-6 text-center hover:shadow-lg transition">
+                        <h3 class="text-xl font-bold mb-2">Basic</h3>
+                        <p class="text-4xl font-extrabold mb-4">$19<span class="text-lg">/mo</span></p>
+                        <ul class="text-left mb-4 space-y-2">
+                            <li>Up to 50 products</li>
+                            <li>Basic support</li>
+                            <li>Standard analytics</li>
+                        </ul>
+                        <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Get Started</button>
+                    </div>
+                    <!-- Pro -->
+                    <div class="border rounded-lg p-6 text-center hover:shadow-lg transition">
+                        <h3 class="text-xl font-bold mb-2">Pro</h3>
+                        <p class="text-4xl font-extrabold mb-4">$49<span class="text-lg">/mo</span></p>
+                        <ul class="text-left mb-4 space-y-2">
+                            <li>Up to 500 products</li>
+                            <li>Priority support</li>
+                            <li>Advanced analytics</li>
+                        </ul>
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition">Choose Plan</button>
+                    </div>
+                    <!-- Enterprise -->
+                    <div class="border rounded-lg p-6 text-center hover:shadow-lg transition">
+                        <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                        <p class="text-4xl font-extrabold mb-4">Custom</p>
+                        <ul class="text-left mb-4 space-y-2">
+                            <li>Unlimited products</li>
+                            <li>Dedicated support</li>
+                            <li>Custom integrations</li>
+                        </ul>
+                        <button class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition">Contact Us</button>
+                    </div>
+                </div>
+            </section>
+            <!-- featured products -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-4">Featured Products</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {% for p in products %}
+                        {% if p.featured %}
+                            <div data-aos="zoom-in" data-category="{{ p.category }}" data-price="{{ p.price }}" class="product-card bg-white bg-opacity-40 backdrop-blur-lg rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 hover:scale-105 relative">
+                                <div class="relative">
+                                    <img src="{{ p.image }}" alt="{{ p.name }}" class="w-full h-48 object-cover quick-view-trigger" data-id="{{ p.id }}" />
+                                    <span class="absolute top-2 left-2 bg-gray-800 bg-opacity-60 text-white px-2 py-1 text-xs rounded">{{ p.vendor.name }}</span>
+                                </div>
+                                {% if p.badge %}
+                                <span class="absolute top-2 right-2 bg-indigo-600 text-white px-2 py-1 text-xs font-semibold rounded animate-pulse">{{ p.badge }}</span>
+                                {% endif %}
+                                {% if p.discount %}
+                                <span class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded animate-pulse">-{{ p.discount }}</span>
+                                {% endif %}
+                                <button class="wishlist absolute bottom-2 right-2 text-gray-400 hover:text-red-500 focus:outline-none">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold mb-1">{{ p.name }}</h3>
+                                    <p class="text-xs text-gray-600 mb-1">Sold by: <span class="font-medium text-gray-800">{{ p.vendor.name }}</span> <span class="text-yellow-400">{% for i in "12345" %}{% if forloop.counter <= p.vendor.rating|floatformat:0 %}<i class="fas fa-star"></i>{% endif %}{% endfor %}</span></p>
+                                    <p class="text-gray-800 font-bold mb-2">${{ p.price }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+            <div id="skeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- placeholder cards -->
+                {% for i in "12345678" %}
+                <div class="animate-pulse bg-white bg-opacity-20 backdrop-blur-lg rounded-xl h-80"></div>
+                {% endfor %}
+            </div>
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden">
+                {% for p in products %}
+                <div data-aos="fade-up" data-category="{{ p.category }}" data-price="{{ p.price }}" class="product-card bg-white bg-opacity-40 backdrop-blur-lg rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 hover:scale-105 relative">
+                    <div class="relative">
+                    <img src="{{ p.image }}" alt="{{ p.name }}" class="w-full h-48 object-cover quick-view-trigger" data-id="{{ p.id }}" />
+                    <span class="absolute top-2 left-2 bg-gray-800 bg-opacity-60 text-white px-2 py-1 text-xs rounded">{{ p.vendor.name }}</span>
+                    </div>
+                    {% if p.discount %}
+                    <span class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded animate-pulse">-{{ p.discount }}</span>
+                    {% endif %}
+                    {% if p.badge %}
+                    <span class="absolute top-2 right-2 bg-indigo-600 text-white px-2 py-1 text-xs font-semibold rounded animate-pulse">{{ p.badge }}</span>
+                    {% endif %}
+                    <button class="wishlist absolute bottom-2 right-2 text-gray-400 hover:text-red-500 focus:outline-none">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-1">{{ p.name }}</h3>
+                        <p class="text-xs text-gray-600 mb-1">Sold by: <span class="font-medium text-gray-800">{{ p.vendor.name }}</span> <span class="text-yellow-400">{% for i in "12345" %}{% if forloop.counter <= p.vendor.rating|floatformat:0 %}<i class="fas fa-star"></i>{% endif %}{% endfor %}</span></p>
+                        {% if p.old_price %}
+                        <p class="text-gray-500 line-through mb-1">${{ p.old_price }}</p>
+                        {% endif %}
+                        <p class="text-gray-800 font-bold mb-2">${{ p.price }}</p>
+                        {% if p.category %}
+                        <p class="text-xs text-gray-600 mb-2">{{ p.category }}</p>
+                        {% endif %}
+                        <div class="flex items-center mb-2">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= p.rating %}
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                {% else %}
+                                    <i class="far fa-star text-yellow-400"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="add-cart relative overflow-hidden bg-gradient-to-r from-green-400 to-teal-400 text-white px-4 py-2 rounded-full focus:outline-none">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        sidebar.classList.toggle('-translate-x-full');
+    });
+
+    // simulate loading then reveal
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.getElementById('skeletonGrid').classList.add('hidden');
+            document.getElementById('productGrid').classList.remove('hidden');
+        }, 800);
+    });
+
+    // add to cart ripple & counter
+    let cartCount = 0;
+    document.querySelectorAll('.add-cart').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // ripple
+            const circle = document.createElement('span');
+            circle.className = 'ripple';
+            this.appendChild(circle);
+            const d = Math.max(this.clientWidth, this.clientHeight);
+            circle.style.width = circle.style.height = d + 'px';
+            circle.style.left = e.clientX - this.offsetLeft - d/2 + 'px';
+            circle.style.top = e.clientY - this.offsetTop - d/2 + 'px';
+            setTimeout(() => circle.remove(), 600);
+
+            // counter
+            cartCount++;
+            const badge = document.getElementById('cartCount');
+            badge.textContent = cartCount;
+            badge.classList.add('scale-110');
+            setTimeout(() => badge.classList.remove('scale-110'), 200);
+
+            // popup toast
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg opacity-0 transition-opacity';
+            toast.textContent = 'Added to cart';
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('opacity-100'));
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                setTimeout(() => toast.remove(), 300);
+            }, 1200);
+        });
+    });
+
+    // header hide on scroll
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const current = window.pageYOffset;
+        if (current > lastScroll) {
+            document.getElementById('topHeader').classList.add('-translate-y-full');
+        } else {
+            document.getElementById('topHeader').classList.remove('-translate-y-full');
+        }
+        lastScroll = current;
+    });
+
+    // wishlist toggle
+    document.querySelectorAll('.wishlist').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far'); icon.classList.add('fas', 'text-red-500');
+            } else {
+                icon.classList.remove('fas','text-red-500'); icon.classList.add('far');
+            }
+        });
+    });
+
+    // quick view modal
+    const modal = document.createElement('div');
+    modal.id = 'quickView';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-40';
+    modal.innerHTML = `
+      <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden w-11/12 md:w-2/3 lg:w-1/2">
+        <div class="p-4 flex justify-between items-center">
+          <h2 id="qvTitle" class="text-xl font-bold"></h2>
+          <button id="qvClose" class="text-gray-600 dark:text-gray-200">&times;</button>
+        </div>
+        <div class="p-4" id="qvContent"></div>
+      </div>
+    `;
+    // products variable for quick view
+    const products = JSON.parse(document.getElementById('products-data').textContent);
+    document.body.appendChild(modal);
+    document.getElementById('qvClose').addEventListener('click', () => { modal.classList.add('hidden'); });
+    document.querySelectorAll('.quick-view-trigger').forEach(el => {
+        el.addEventListener('click', () => {
+            const id = el.dataset.id;
+            const prod = products.find(p => p.id == id);
+            if (prod) {
+                document.getElementById('qvTitle').textContent = prod.name;
+                document.getElementById('qvContent').innerHTML = `
+                   <img src="${prod.image}" class="w-full" />
+                   <p class="mt-2">Price: $${prod.price}</p>
+                   <p class="mt-1">Category: ${prod.category}</p>
+                   <button class="add-cart mt-4 bg-green-500 text-white px-4 py-2 rounded">Add to cart</button>
+                `;
+                // rebind cart listener on quick view button
+                document.querySelector('#qvContent .add-cart').addEventListener('click', function(e) {
+                    // reuse same ripple/counter logic
+                    const circle = document.createElement('span');
+                    circle.className = 'ripple';
+                    this.appendChild(circle);
+                    const d = Math.max(this.clientWidth, this.clientHeight);
+                    circle.style.width = circle.style.height = d + 'px';
+                    circle.style.left = e.clientX - this.offsetLeft - d/2 + 'px';
+                    circle.style.top = e.clientY - this.offsetTop - d/2 + 'px';
+                    setTimeout(() => circle.remove(), 600);
+                    cartCount++;
+                    const badge = document.getElementById('cartCount');
+                    badge.textContent = cartCount;
+                    badge.classList.add('scale-110');
+                    setTimeout(() => badge.classList.remove('scale-110'), 200);
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed top-20 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg opacity-0 transition-opacity';
+                    toast.textContent = 'Added to cart';
+                    document.body.appendChild(toast);
+                    requestAnimationFrame(() => toast.classList.add('opacity-100'));
+                    setTimeout(() => {
+                        toast.classList.remove('opacity-100');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 1200);
+                });
+                modal.classList.remove('hidden');
+            }
+        });
+    });
+
+    // front-end filtering
+    const filterCategory = document.getElementById('categoryFilter');
+    const priceRange = document.getElementById('priceRange');
+    const priceValue = document.getElementById('priceValue');
+    const allCards = document.querySelectorAll('#productGrid .product-card');
+    function applyFilters() {
+        const cat = filterCategory.value;
+        const maxPrice = parseFloat(priceRange.value);
+        allCards.forEach(card => {
+            const c = card.dataset.category;
+            const p = parseFloat(card.dataset.price);
+            let show = true;
+            if (cat !== 'all' && c !== cat) show = false;
+            if (p > maxPrice) show = false;
+            card.style.display = show ? '' : 'none';
+        });
+    }
+    filterCategory.addEventListener('change', () => {
+        document.getElementById('pageSpinner').classList.remove('hidden');
+        setTimeout(() => { applyFilters(); document.getElementById('pageSpinner').classList.add('hidden'); }, 300);
+    });
+    priceRange.addEventListener('input', () => {
+        priceValue.textContent = '$' + priceRange.value;
+        document.getElementById('pageSpinner').classList.remove('hidden');
+        setTimeout(() => { applyFilters(); document.getElementById('pageSpinner').classList.add('hidden'); }, 300);
+    });
+
+    // fake cart counter update is already handled
+
+    // navigation spinner for links
+    document.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', (e) => {
+            if (a.href && !a.href.startsWith('#')) {
+                document.getElementById('pageSpinner').classList.remove('hidden');
+            }
+        });
+    });
+
+    // products variable for quick view
+    const products = JSON.parse(document.getElementById('products-data').textContent);
+</script>
+
+<style>
+@keyframes slide-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
+}
+
+/* ripple on button */
+.add-cart { position: relative; overflow: hidden; }
+.add-cart .ripple { position: absolute; background: rgba(255,255,255,0.6); border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; }
+@keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+/* rating star pulse */
+.product-card .fa-star {
+  transition: transform 0.2s;
+}
+.product-card:hover .fa-star {
+  transform: scale(1.2);
+}
+
+/* hero background zoom */
+.hero-banner {
+  animation: heroZoom 20s ease infinite alternate;
+}
+@keyframes heroZoom { to { transform: scale(1.1); } }
+</style>
+{% endblock %}

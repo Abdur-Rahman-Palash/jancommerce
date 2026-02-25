@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: jancommerce
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.prod
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+    databases:
+      - name: jancommerce-db
+        plan: free
+        databaseName: jancommerce
+        user: jancommerce
+
+databases:
+  - name: jancommerce-db
+    plan: free
+    databaseName: jancommerce
+    user: jancommerce

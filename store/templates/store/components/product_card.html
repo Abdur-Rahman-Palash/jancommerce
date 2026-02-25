@@ -1,0 +1,86 @@
+{% comment %} expects variable 'p' in context {% endcomment %}
+<div data-category="{{ p.category }}" data-price="{{ p.price }}" class="product-card group relative bg-white/10 backdrop-blur-xl rounded-2xl shadow-lg overflow-hidden border border-white/20 hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+    <div class="relative overflow-hidden">
+        <img src="{{ p.image }}" alt="{{ p.name }}" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <!-- Vendor badge -->
+        <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-sm text-white px-3 py-1 text-xs rounded-full font-medium">
+            <i class="fas fa-store mr-1"></i>{{ p.vendor.name }}
+        </span>
+        
+        <!-- Discount badge -->
+        {% if p.discount %}
+        <span class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 text-xs font-bold rounded-full animate-pulse">
+            <i class="fas fa-tag mr-1"></i>-{{ p.discount }}
+        </span>
+        {% endif %}
+        
+        <!-- Status badge -->
+        {% if p.badge %}
+        <span class="absolute top-3 right-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 text-xs font-semibold rounded-full animate-pulse">
+            {{ p.badge }}
+        </span>
+        {% endif %}
+        
+        <!-- Quick actions -->
+        <div class="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button class="wishlist w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                <i class="far fa-heart"></i>
+            </button>
+            <button class="quick-view w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="p-5">
+        <div class="mb-3">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-1">{{ p.name }}</h3>
+            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                <span class="flex items-center">
+                    <i class="fas fa-store mr-1 text-xs"></i>{{ p.vendor.name }}
+                </span>
+                <span class="flex items-center">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= p.vendor.rating|floatformat:0 %}
+                            <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        {% else %}
+                            <i class="far fa-star text-yellow-400 text-xs"></i>
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between mb-3">
+            <div>
+                {% if p.old_price %}
+                <p class="text-sm text-gray-500 line-through">${{ p.old_price }}</p>
+                {% endif %}
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">${{ p.price }}</p>
+            </div>
+            {% if p.category %}
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full font-medium">
+                {{ p.category }}
+            </span>
+            {% endif %}
+        </div>
+        
+        <div class="flex items-center mb-4">
+            {% for i in "12345" %}
+                {% if forloop.counter <= p.rating %}
+                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                {% else %}
+                    <i class="far fa-star text-yellow-400 text-sm"></i>
+                {% endif %}
+            {% endfor %}
+            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">({{ p.rating }}/5)</span>
+        </div>
+        
+        <button class="add-cart w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2" onclick="router.addToCart({{ p.id }})">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Add to Cart</span>
+        </button>
+    </div>
+</div>

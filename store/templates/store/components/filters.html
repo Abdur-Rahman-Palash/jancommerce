@@ -1,0 +1,16 @@
+<div id="filters" class="flex flex-col md:flex-row items-center justify-between mb-6 space-y-4 md:space-y-0">
+    <div>
+        <label class="font-medium">Category:</label>
+        <select id="categoryFilter" class="border rounded px-2 py-1">
+            <option value="all">All</option>
+            {% for i in "1234" %}
+            <option value="Category {{ i }}">Category {{ i }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="flex items-center space-x-2">
+        <label class="font-medium">Price:</label>
+        <input type="range" id="priceRange" min="0" max="200" value="200" class="w-48" />
+        <span id="priceValue" class="w-12 inline-block text-right">$200</span>
+    </div>
+</div>

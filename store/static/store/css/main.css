@@ -1,0 +1,40 @@
+/* Custom stylesheet for premium SaaS UI */
+
+/* Glassmorphism backgrounds */
+.glass-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+}
+
+/* Animated gradient backgrounds */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.gradient-anim {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 16s ease infinite;
+}
+
+/* Floating elements */
+.floating {
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Micro interaction button */
+.btn-micro:hover { transform: translateY(-2px) scale(1.02); }
+.btn-micro:active { transform: translateY(0) scale(0.98); }
+
+/* Spinner override */
+.loader { border-top-color: #3490dc; }
+
+/* Hide scrollbar in overlay */
+#pageSpinner { scrollbar-width: none; -ms-overflow-style: none; }
+#pageSpinner::-webkit-scrollbar { display: none; }
